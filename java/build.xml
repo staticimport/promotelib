@@ -1,0 +1,40 @@
+<project name="MyProject" default="dist" basedir=".">
+  <description>
+    simple example build file
+  </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="buildbasedir" location="build"/>
+  <property name="compiledir" location="build/obj"/>
+  <property name="distdir"  location="build/lib"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${buildbasedir}"/>
+  </target>
+
+  <target name="compile" depends="init" description="compile the source " >
+    <!-- Create the compile directory -->
+    <mkdir dir="${compiledir}"/>
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${compiledir}" includeantruntime="false"/>
+  </target>
+
+  <target name="dist" depends="compile" description="create output jar" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${distdir}"/>
+    <!-- Put everything in ${compiledir} into the promotelib-${DSTAMP}.jar file -->
+    <property name="jar" location="${distdir}/promotelib-${DSTAMP}.jar"/>
+    <jar jarfile="${jar}" basedir="${compiledir}"/>
+    <symlink link="${distdir}/promotelib.jar" resource="${jar}" overwrite="true"/>
+  </target> 
+
+  <target name="clean" description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${compiledir}"/>
+    <delete dir="${distdir}"/>
+  </target>
+</project>
+
