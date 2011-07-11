@@ -1,7 +1,7 @@
 #ifndef PROMOTE_TASK_HPP_
 #define PROMOTE_TASK_HPP_
 
-#include "ArrayList.hpp"
+#include "ArrayDeque.hpp"
 
 namespace promote
 {
@@ -23,21 +23,20 @@ namespace promote
         /* Non-Const */
         void addListener(TaskCompletedListener* listener)
         {
-            _listeners.add(listener);
+            _listeners.pushBack(listener);
         }
         virtual void process() = 0;
         void setCompleted()
         { 
             _completed = true; 
-            for(ArrayList<TaskCompletedListener*>::Iterator iter = _listeners.begin();
-                iter != _listeners.end();
-                ++iter)
+            ArrayDeque<TaskCompletedListener*>::ConstIterator iter(_listeners);
+            while( iter.hasNext() )
             {
-              (*iter)->onTaskCompleted(this);
+              iter.next()->onTaskCompleted(this);
             }
         }
     private:
-        ArrayList<TaskCompletedListener*> _listeners;
+        ArrayDeque<TaskCompletedListener*> _listeners;
         bool _completed;
     };
 }

@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#include "ArrayList.hpp"
+#include "ArrayDeque.hpp"
 #include "Scheduler.hpp"
 #include "Task.hpp"
 
@@ -39,7 +39,7 @@ namespace promote
     private:
         void insertTask(TASK* const task);
 
-        ArrayList<Queue<TASK*,false,false>*> _tiers;
+        ArrayDeque<Queue<TASK*,false,false>*> _tiers;
         std::size_t _numTasks;
         std::size_t _counter;
     };
