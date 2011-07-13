@@ -3,77 +3,58 @@
 
 #include <exception>
 
+#include "Buffer.hpp"
 #include "FormattedString.hpp"
 #include "Iterator.hpp"
 #include "String.hpp"
 
 namespace promote {
-    class String;
+  class FileReaderException : public std::exception {
+  public:
+    FileReaderException(promote::String const& reason) : _reason(reason) { }
+    ~FileReaderException() throw() { }
+    char const* what() const throw() { return _reason.c_str(); }
+  private:
+    promote::String const _reason;
+  };
 
-    class FileReaderException : public std::exception {
-    public:
-        FileReaderException(promote::String const& reason) : _reason(reason) { }
-        ~FileReaderException() throw() { }
-        char const* what() const throw() { return _reason.c_str(); }
-    private:
-        promote::String const _reason;
-    };
+  class FileReader : public Iterator<char> {
+  public:
+    FileReader(char const* const filename, 
+               bool const concurrent = false);
+    ~FileReader();
 
-    template <bool CONCURRENT=false>
-    class FileReader : public Iterator<char> {
-    public:
-        FileReader(String const& filename);
-        ~FileReader();
+    inline bool hasNext() const;
+    inline char next();
+  private:
+    inline bool eof() const;
+    std::size_t readIntoBuffer();
 
-        // Const
-        bool hasNext() const {
-            return !_buffer.isEmpty() or !feof_unlocked(_fp);
-        }
-        char next() {
-            if( _buffer.isEmpty() ) readIntoBuffer();
-            char const c(*_buffer.head());
-            _buffer.add(1,false);
-            return c;
-        }
-    private:
-        void readIntoBuffer();
-
-        FILE* const _fp;
-        Buffer<char> _buffer;
-    };
+    FILE* const _fp;
+    Buffer<char> _buffer;
+    bool const _concurrent;
+  };
 }
 
-template <bool CONCURRENT>
-promote::FileReader::FileReader(char const* const filename)
-:   _fp(fopen(filename)),
-    _buffer(1024, 2.0)
+/***
+ * Implementation
+ ***/
+inline bool promote::FileReader::hasNext() const
 {
-    if( _fp == NULL ) {
-        promote::FormattedString const reason("Unable to open file: %s", filename);
-        throw FileReaderException(reason);
-    }
+  return !_buffer.isEmpty() or !eof();
 }
 
-template <bool CONCURRENT>
-promote::FileReader::~FileReader()
+inline char promote::FileReader::next()
 {
-    fclose(_fp);
+  if( _buffer.isEmpty() ) readIntoBuffer();
+  char const c(*_buffer.head());
+  _buffer.add(1,false);
+  return c;
 }
 
-template <bool CONCURRENT>
-bool promote::FileReader::readIntoBuffer()
+inline bool promote::FileReader::eof() const
 {
-    std::size_t const countRead(fread_unlocked(_buffer.head(), 1, 
-                                               _buffer.available(), _fp));
-    if( countRead ) {
-        return countRead;
-    } else {
-        if( feof_unlocked(_fp) ) {
-            throw FileReaderException("End of file reached.");
-        } else if( ferror_unlocked(_fp) ) {
-            throw FileReaderException("Error encountered.");
-        }
-    }
+  return (_concurrent ? feof(_fp) : feof_unlocked(_fp)) != 0;
 }
 
 #endif /* PROMOTE_FILE_READER_HPP_ */
