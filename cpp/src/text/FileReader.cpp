@@ -20,6 +20,19 @@ FileReader::~FileReader()
   fclose(_fp);
 }
 
+bool FileReader::hasNext()
+{
+  return !_buffer.isEmpty() or !eof();
+}
+
+char promote::FileReader::next()
+{
+  if( _buffer.isEmpty() ) readIntoBuffer();
+  char const c(*_buffer.head());
+  _buffer.add(1,false);
+  return c;
+}
+
 std::size_t FileReader::readIntoBuffer()
 {
   //std::size_t const countRead = _concurrent ?

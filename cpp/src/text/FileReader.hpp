@@ -24,8 +24,8 @@ namespace promote {
                bool const concurrent = false);
     ~FileReader();
 
-    inline bool hasNext() const;
-    inline char next();
+    bool hasNext();
+    char next();
   private:
     inline bool eof() const;
     std::size_t readIntoBuffer();
@@ -39,19 +39,6 @@ namespace promote {
 /***
  * Implementation
  ***/
-inline bool promote::FileReader::hasNext() const
-{
-  return !_buffer.isEmpty() or !eof();
-}
-
-inline char promote::FileReader::next()
-{
-  if( _buffer.isEmpty() ) readIntoBuffer();
-  char const c(*_buffer.head());
-  _buffer.add(1,false);
-  return c;
-}
-
 inline bool promote::FileReader::eof() const
 {
   return (_concurrent ? feof(_fp) : feof_unlocked(_fp)) != 0;
