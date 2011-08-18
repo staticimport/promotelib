@@ -3,15 +3,15 @@
 #import "PMTCommonType.h"
 
 typedef struct pmt_sllist_node {
-    struct pmt_sllist_node* next;
-    pmt_common_t value;
+  struct pmt_sllist_node* next;
+  pmt_common_t value;
 } pmt_sllist_node_t;
 
 @interface PMTSinglyLinkedList : NSObject
 {
-    struct pmt_sllist_node* _first;
-	struct pmt_sllist_node* _last;
-	NSUInteger _count;
+  struct pmt_sllist_node* _first;
+  struct pmt_sllist_node* _last;
+  NSUInteger _count;
 }
 
 - (NSUInteger)count;
