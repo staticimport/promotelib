@@ -13,7 +13,8 @@ static inline double pmt_testing_calc_nanos_per(uint64_t const total_micros,
 }
 
 void pmt_print_perf_result(char const *const  name,
-                           double const average_nanos);
+                           uint64_t iterations,
+                           uint64_t total_nanos);
 
 void pmt_print_unit_result(const char* name,
                            const char* error);

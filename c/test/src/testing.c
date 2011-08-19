@@ -6,19 +6,29 @@
 #include "testing.h"
 
 void pmt_print_perf_result(char const *const name,
-                           double const average_nanos)
+                           uint64_t const iters,
+                           uint64_t const total_nanos)
 {
     char buf[128];
-    char nanos_buf[32];
-    
-    //double const ave_nanos = ((double)elapsed_nanos) / iter_count;
-    const unsigned nanos_len = sprintf(nanos_buf, "%.3f", average_nanos);
-    const unsigned name_len = strlen(name);
+    char name_with_iters_buf[128];
+    char nanos_buf[128];
 
-    memcpy(buf, name, name_len);
-    memset(buf + name_len, '.', 70 - name_len - nanos_len);
-    memcpy(buf + 70 - nanos_len, nanos_buf, nanos_len);
-    printf("%.*s ns\n", 70, buf);
+    // Name
+    unsigned const name_with_iters_len = 
+      sprintf(name_with_iters_buf, "%s x %llu", name,
+              (unsigned long long)iters);
+
+    // Time
+    double const ave_nanos = ((double)total_nanos) / iters;
+    const unsigned nanos_len = 
+      sprintf(nanos_buf, "total: %llu, avg: %.3f", 
+              (unsigned long long)total_nanos, ave_nanos);
+
+    memcpy(buf, name_with_iters_buf, name_with_iters_len);;
+    memset(buf + name_with_iters_len, '.', 
+           80 - name_with_iters_len - nanos_len);
+    memcpy(buf + 80 - nanos_len, nanos_buf, nanos_len);
+    printf("%.*s ns\n", 80, buf);
 }
 
 void pmt_print_unit_result(const char* name,

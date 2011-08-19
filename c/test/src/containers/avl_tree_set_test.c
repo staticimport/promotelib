@@ -9,9 +9,9 @@
 #include "stopwatch.h"
 #include "testing.h"
 
-static double perf_test_decreasing_add(size_t const count);
-static double perf_test_increasing_add(size_t const count);
-static double perf_test_random_add(size_t const count);
+static uint64_t perf_test_decreasing_add(size_t const count);
+static uint64_t perf_test_increasing_add(size_t const count);
+static uint64_t perf_test_random_add(size_t const count);
 //static double perf_test_decreasing_contains(size_t const count);
 
 //static uint64_t perf_test_increasing_add();
@@ -45,30 +45,21 @@ static void setup()
 void pmt_perf_test_avl_tree_set()
 {
     setup();
-    pmt_print_perf_result("AVL_TREE_SET.add() x 10 decreasing",
-                          perf_test_decreasing_add(10));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 100 decreasing",
-                          perf_test_decreasing_add(100));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 1000 decreasing",
-                          perf_test_decreasing_add(1000));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 10000 decreasing",
-                          perf_test_decreasing_add(10000));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 10 increasing",
-                          perf_test_increasing_add(10));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 100 increasing",
-                          perf_test_increasing_add(100));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 1000 increasing",
-                          perf_test_increasing_add(1000));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 10000 increasing",
-                          perf_test_increasing_add(10000));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 10 random",
-                          perf_test_random_add(10));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 100 random",
-                          perf_test_random_add(100));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 1000 random",
-                          perf_test_random_add(1000));
-    pmt_print_perf_result("AVL_TREE_SET.add() x 10000 random",
-                          perf_test_random_add(10000));
+    // Decreasing
+    for(uint64_t ii = 10; ii <= 10000; ii *= 10) {
+      pmt_print_perf_result("AVL_TREE_SET.add() decreasing", ii,
+                            perf_test_decreasing_add(ii));
+    }
+    // Increasing
+    for(uint64_t ii = 10; ii <= 10000; ii *= 10) {
+      pmt_print_perf_result("AVL_TREE_SET.add() increasing", ii,
+                            perf_test_increasing_add(ii));
+    }
+    // Random
+    for(uint64_t ii = 10; ii <= 10000; ii *= 10) {
+      pmt_print_perf_result("AVL_TREE_SET.add() random", ii,
+                            perf_test_random_add(ii));
+    }
 }
 
 void pmt_unit_test_avl_tree_set()
@@ -79,7 +70,7 @@ void pmt_unit_test_avl_tree_set()
     pmt_print_unit_result("AVL_TREE_SET.contains()", unit_test_contains());
 }
 
-static double perf_test_decreasing_add(size_t const count)
+static uint64_t perf_test_decreasing_add(size_t const count)
 {
     pmt_stopwatch_t timer;
     uint64_t const iters = 1000000 / count;
@@ -95,10 +86,10 @@ static double perf_test_decreasing_add(size_t const count)
         pmt_avlset_uninit(&set);
     }
 
-    return (double)(pmt_stopwatch_elapsed_nanos(&timer)) / iters;
+    return pmt_stopwatch_elapsed_nanos(&timer) / iters;
 }
 
-static double perf_test_increasing_add(size_t const count)
+static uint64_t perf_test_increasing_add(size_t const count)
 {
     pmt_stopwatch_t timer;
     uint64_t const iters = 1000000 / count;
@@ -114,10 +105,10 @@ static double perf_test_increasing_add(size_t const count)
         pmt_avlset_uninit(&set);
     }
 
-    return (double)(pmt_stopwatch_elapsed_nanos(&timer)) / iters;
+    return pmt_stopwatch_elapsed_nanos(&timer)/ iters;
 }
 
-static double perf_test_random_add(size_t const count)
+static uint64_t perf_test_random_add(size_t const count)
 {
     pmt_stopwatch_t timer;
     uint64_t const iters = 1000000 / count;
@@ -137,7 +128,7 @@ static double perf_test_random_add(size_t const count)
         pmt_avlset_uninit(&set);
     }
 
-    return (double)(pmt_stopwatch_elapsed_nanos(&timer)) / iters;
+    return pmt_stopwatch_elapsed_nanos(&timer) / iters;
 }
 
 static char const* unit_test_init()

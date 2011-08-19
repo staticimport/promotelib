@@ -2,6 +2,7 @@
 #define PROMOTE_STOP_WATCH_H_
 
 #include <stdbool.h>
+#include <stdio.h>
 #include <sys/time.h>
 
 #include "time_utils.h"

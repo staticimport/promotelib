@@ -116,7 +116,7 @@ namespace promote
         {
             enum State { NEW, LEFT_DONE, SELF_DONE };
 
-            IteratorStep(E* theEntry, State theState = NEW)
+            IteratorStep(E* theEntry = 0, State theState = NEW)
             :   entry(theEntry), state(theState)
             { }
             IteratorStep(IteratorStep const& is)
