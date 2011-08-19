@@ -4,6 +4,10 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "universal.h"
 
 static const size_t PROMOTE_VECTOR_INVALID_INDEX = -1;
 
@@ -56,15 +60,15 @@ static inline void
 pmt_vector_add_back(pmt_vector_t* const restrict vector,
                     pmt_universal_t const item);
 
-void
+bool
 pmt_vector_ensure_capacity(pmt_vector_t* const restrict vector,
                            size_t const capacity);
 
-static inline pmt_universal_t
+static inline void
 pmt_vector_remove_at_index(pmt_vector_t* const restrict vector,
                            size_t const index);
 
-static inline pmt_universal_t
+static inline void
 pmt_vector_remove_back(pmt_vector_t* const restrict vector);
 
 static inline bool
@@ -106,7 +110,7 @@ pmt_vector_index_of(pmt_vector_t const* const restrict vector,
 {
   pmt_universal_t* const end = vector->array + vector->size;
   for(pmt_universal_t* entry = vector->array; entry != end; ++entry) {
-    if( *entry == item ) {
+    if( pmt_universal_are_equal(*entry, item) ) {
       return entry - vector->array;
     }
   }
@@ -125,7 +129,7 @@ pmt_vector_last_index_of(pmt_vector_t const* const restrict vector,
 {
   pmt_universal_t* const front = vector->array;
   for(pmt_universal_t* entry = front + vector->size - 1; entry >= front; --entry) {
-    if( *entry == item ) {
+    if( pmt_universal_are_equal(*entry, item) ) {
       return entry - front;
     }
   }

@@ -1,10 +1,12 @@
 #ifndef PROMOTE_UNIVERSAL_H_
 #define PROMOTE_UNIVERSAL_H_
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
 typedef union pmt_universal {
+    bool b;
     char c;
     double d;
     float f;
@@ -29,6 +31,14 @@ typedef union pmt_universal {
     void* ptr;
     void const* cptr;
 } pmt_universal_t;
+
+static inline pmt_universal_t
+pmt_universal_bool(bool const b)
+{
+  pmt_universal_t value;
+  value.b = b;
+  return value;
+}
 
 static inline pmt_universal_t
 pmt_universal_char(char const c)
@@ -212,6 +222,12 @@ pmt_universal_constptr(void const *const cptr)
     pmt_universal_t value;
     value.cptr = cptr;
     return value;
+}
+
+static inline bool
+pmt_universal_are_equal(pmt_universal_t const u1, pmt_universal_t const u2)
+{
+  return u1.u64 == u2.u64;
 }
 
 
