@@ -168,7 +168,8 @@ pmt_vector_add_at_index(pmt_vector_t* const restrict vector,
     bool expanded = pmt_vector_ensure_capacity(vector, vector->capacity << 1);
     assert(expanded);
   }
-  memmove(vector->array + index + 1, vector->array + index, vector->size++ - index);
+  memmove(vector->array + index + 1, vector->array + index, 
+          (vector->size++ - index) * sizeof(pmt_universal_t));
   vector->array[index] = item;
 }
 
@@ -188,7 +189,8 @@ pmt_vector_remove_at_index(pmt_vector_t* const restrict vector,
                            size_t const index)
 {
   assert(vector->size > index);
-  memmove(vector->array + index, vector->array + index + 1, vector->size-- - index);
+  memmove(vector->array + index, vector->array + index + 1, 
+          (--(vector->size) - index) * sizeof(pmt_universal_t));
 }
 
 static inline void
