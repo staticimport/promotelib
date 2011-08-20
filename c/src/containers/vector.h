@@ -17,6 +17,11 @@ typedef struct pmt_vector {
   size_t size;
 } pmt_vector_t;
 
+typedef struct pmt_vector_iterator {
+  pmt_universal_t const* next;
+  pmt_universal_t const* end;
+} pmt_vector_iterator_t;
+
 /* Init / Uninit */
 void
 pmt_vector_init(pmt_vector_t* const restrict vector,
@@ -78,6 +83,17 @@ pmt_vector_remove(pmt_vector_t* const restrict vector,
 static inline bool
 pmt_vector_remove_last(pmt_vector_t* const restrict vector,
                        pmt_universal_t const item);
+
+/* Iterator */
+static inline void
+pmt_vector_iterator_init(pmt_vector_t const* const restrict vector,
+                         pmt_vector_iterator_t* const restrict iter);
+
+static inline bool
+pmt_vector_iterator_has_next(pmt_vector_iterator_t const* const restrict iter);
+
+static inline pmt_universal_t
+pmt_vector_iterator_next(pmt_vector_iterator_t* const restrict iter);
 
 /***
  * Inline Implemenations
@@ -206,6 +222,28 @@ pmt_vector_remove_last(pmt_vector_t* const restrict vector,
   } else {
     return false;
   }
+}
+
+/* Iterator */
+static inline void
+pmt_vector_iterator_init(pmt_vector_t const* const restrict vector,
+                         pmt_vector_iterator_t* const restrict iter)
+{
+  iter->next = vector->array;
+  iter->end = vector->array + vector->size;
+}
+
+static inline bool
+pmt_vector_iterator_has_next(pmt_vector_iterator_t const* const restrict iter)
+{
+  return iter->next != iter->end;
+}
+
+static inline pmt_universal_t
+pmt_vector_iterator_next(pmt_vector_iterator_t* const restrict iter)
+{
+  assert(iter->next != iter->end);
+  return *(iter->next)++;
 }
 
 #endif /* PROMOTE_VECTOR_H */
