@@ -6,28 +6,30 @@
 #include <iostream>
 
 #include "Padded.hpp"
+#include "Structors.hpp"
 #include "Utilities.hpp"
 
 namespace promote
 {
-    namespace array {
-        template <typename T, bool PADDED>
-        struct Traits {
-            typedef T Entry;
-            static T& value(Entry& e)               { return e; }
-            static T const& value(Entry const& e)   { return e; }
-        };
+  namespace array {
+    template <typename T, bool PADDED>
+    struct Traits {
+      typedef T Entry;
+      static T& value(Entry& e)               { return e; }
+      static T const& value(Entry const& e)   { return e; }
+    };
 
-        template <typename T>
-        struct Traits<T,true> {
-            typedef Padded<T> Entry;
-            static T& value(Entry& e)               { return e.value(); }
-            static T const& value(Entry const& e)   { return e.value(); }
-        };
-    }
+    template <typename T>
+    struct Traits<T,true> {
+      typedef Padded<T> Entry;
+      static T& value(Entry& e)               { return e.value(); }
+      static T const& value(Entry const& e)   { return e.value(); }
+    };
+  }
 
-    template <typename T, bool PADDED=false, bool CTOR_INIT=true, bool COPY_SAFE=IsClass<T>::No and IsReference<T>::No>
-    class Array {
+  template <typename T, bool CTOR_INIT=true, bool PADDED=false,
+            bool POD=IsClass<T>::No and IsReference<T>::No>
+  class Array {
     private:
         typedef array::Traits<T,PADDED> Traits;
     public:
@@ -64,73 +66,6 @@ namespace promote
         Entry* _array;
         Entry* _end;
         std::size_t _length;
-    };
-
-    template <typename T, std::size_t L, bool CTOR_INIT=true>
-    class StaticArray
-    {
-    public:
-        StaticArray() : _end(_array + L) { }
-        StaticArray(T const& initValue)
-        :   _end(_array + L)
-        {
-            for(std::size_t ii = 0; ii != L; ++ii) {
-                _array[ii] = initValue;
-            }
-        }
-        ~StaticArray() { }
-
-        /* Const */
-        T const* begin() const      { return _array; }
-        T const* end() const        { return _end; }
-        std::size_t length() const  { return L; }
-        T const& operator[](std::size_t index) const    
-        { 
-            assert(index < L);
-            return _array[index]; 
-        }
-
-        /* Non-Const */
-        T* begin()                  { return _array; }
-        T* end()                    { return _end; }
-        T& operator[](std::size_t index)    
-        { 
-            assert(index < L);
-            return _array[index]; 
-        }
-    private:
-        T _array[L];
-        T* _end;
-    };
-
-    template <typename T, std::size_t L>
-    class StaticArray<T,L,false> {
-    public:
-        StaticArray() : _arrayPtr(reinterpret_cast<T*>(_array)), _end(_arrayPtr + L) { }
-        ~StaticArray() { }
-
-        // Const
-        T const* begin() const      { return _arrayPtr; }
-        T const* end() const        { return _end; }
-        std::size_t length() const  { return L; }
-        T const& operator[](std::size_t index) const    
-        { 
-            assert(index < L);
-            return _arrayPtr[index]; 
-        }
-
-        // Non-Const
-        T* begin()                  { return _arrayPtr; }
-        T* end()                    { return _end; }
-        T& operator[](std::size_t index)    
-        { 
-            assert(index < L);
-            return _arrayPtr[index]; 
-        }
-    private:
-        char _array[L * sizeof(T)];
-        T* _arrayPtr;
-        T* _end;
     };
 }
 
