@@ -43,10 +43,10 @@ void pmt_print_unit_result(const char* name,
 
     memset(buf, '.', fill_len);
     if( is_error ) { 
-        printf("%s%.*s\033[1m%s\033[0m\n\033[7mERROR: %s\033[0m\n", 
+        printf("%s%.*s\033[22;31m%s\n -> ERROR: %s\033[0m\n", 
                name, fill_len, buf, result, error);
     } else {
-        printf("%s%.*s%s\n", name, fill_len, buf, result);
+        printf("%s%.*s\033[22;34m%s\033[0m\n", name, fill_len, buf, result);
     }
 }
 

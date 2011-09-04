@@ -1,0 +1,22 @@
+###
+# Special targets to be done at end of all target
+###
+all-special: $(TARGET_LIBRARY) bin/unit-test-common #bin/perf-test-containers bin/unit-test-containers
+
+# Common Unit Test
+bin/unit-test-common: $(OBJECTS_ROOT_DIR)/common/unit_test.o $(TARGET_LIBRARY)
+	$(CC) $(CC_FLAGS) $(OBJECTS_ROOT_DIR)/common/unit_test.o $(LINKER_FLAGS) -o $@
+
+# Container Performance Test
+bin/perf-test-containers: $(OBJECTS_ROOT_DIR)/containers/perf_test.o $(TARGET_LIBRARY)
+	$(CXX) $(CXX_FLAGS) $(OBJECTS_ROOT_DIR)/containers/perf_test.o $(LINKER_FLAGS) -o $@
+
+# Container Unit Test
+bin/unit-test-containers: $(OBJECTS_ROOT_DIR)/containers/unit_test.o $(TARGET_LIBRARY)
+	$(CC) $(CC_FLAGS) $(OBJECTS_ROOT_DIR)/containers/unit_test.o $(LINKER_FLAGS) -o $@
+
+####
+# Special targets to be done at end of clean target
+####
+clean-special:
+
