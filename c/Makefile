@@ -20,7 +20,7 @@ TARGET_LIBRARY = bin/lib/libpromote.a
 DEBUGGING_FLAGS = -g3 -ggdb
 ENVIRONMENT_FLAGS = -pthread -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DUCS_DEBUG
 INCLUDE_PATH_FLAGS = $(foreach dir,$(sort $(dir $(CC_HEADER_FILES))),-I$(dir))
-MISCELLANEOUS_FLAGS = -rdynamic -pipe -std=gnu99
+MISCELLANEOUS_FLAGS = -pipe -std=gnu99
 OPTIMIZATION_FLAGS = -O3 -msse3
 WARNING_FLAGS = -Wall -Werror
 
