@@ -5,7 +5,7 @@
 int main(void)
 {
   printf("Unit testing...\n");
-  pmt_unit_test_item();
+  pro_unit_test_item();
   return 0;
 }
 

@@ -5,9 +5,9 @@
 
 #include "testing.h"
 
-void pmt_print_perf_result(char const *const name,
-                           uint64_t const iters,
-                           uint64_t const total_nanos)
+void pro_print_perf_iters_result(char const *const name,
+                                 uint64_t const iters,
+                                 double const nanos)
 {
     char buf[128];
     char name_with_iters_buf[128];
@@ -19,7 +19,7 @@ void pmt_print_perf_result(char const *const name,
               (unsigned long long)iters);
 
     // Time
-    double const ave_nanos = ((double)total_nanos) / iters;
+    double const ave_nanos = total_nanos / iters;
     const unsigned nanos_len = 
       sprintf(nanos_buf, "total: %llu, avg: %.3f", 
               (unsigned long long)total_nanos, ave_nanos);
@@ -31,7 +31,7 @@ void pmt_print_perf_result(char const *const name,
     printf("%.*s ns\n", 80, buf);
 }
 
-void pmt_print_unit_result(const char* name,
+void pro_print_unit_result(const char* name,
                            const char* error)
 {
     char buf[128];
