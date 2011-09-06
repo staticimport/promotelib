@@ -6,8 +6,6 @@
 
 
 // Prototypes
-static uint64_t perf_test_bool_init();
-
 static char const* unit_test_bool();
 static char const* unit_test_char();
 static char const* unit_test_double();
@@ -34,7 +32,6 @@ static char const* unit_test_ptr();
 static char const* unit_test_cptr();
 
 void pro_perf_test_item() {
-  pro_print_perf_result("ITEM: init bool", perf_test_bool_init());
 }
 
 void pro_unit_test_item()
@@ -68,7 +65,7 @@ void pro_unit_test_item()
 #define PRO_ITEM_PERF_TEST_INIT(name, type, member, val) \
   static uint64_t name() { \
     pro_stopwatch_t stopwatch; \
-    uint64_t const iters = 1000000; \
+    uint64_t const iters = 100000000; \
     pro_stopwatch_init(&stopwatch); \
     pro_stopwatch_start(&stopwatch); \
     for(uint64_t ii = 0; ii != iters; ++ii) { \
@@ -78,7 +75,7 @@ void pro_unit_test_item()
     return pro_stopwatch_elapsed_nanos(&stopwatch) / iters; \
   }
 
-PRO_ITEM_PERF_TEST_INIT(perf_test_bool_init, bool, b, true)
+//PRO_ITEM_PERF_TEST_INIT(perf_test_bool_init, bool, b, true)
 
 #define PRO_ITEM_TEST_DEF(name, member, val1, val2) \
   static char const* name() { \

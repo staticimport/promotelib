@@ -1,11 +1,19 @@
 ###
 # Special targets to be done at end of all target
 ###
-all-special: $(TARGET_LIBRARY) bin/unit-test-common #bin/perf-test-containers bin/unit-test-containers
+all-special: $(TARGET_LIBRARY) bin/unit-test-common bin/perf-test-common bin/perf-test-c-timestamping #bin/perf-test-containers bin/unit-test-containers
 
 # Common Unit Test
 bin/unit-test-common: $(OBJECTS_ROOT_DIR)/common/unit_test.o $(TARGET_LIBRARY)
 	$(CC) $(CC_FLAGS) $(OBJECTS_ROOT_DIR)/common/unit_test.o $(LINKER_FLAGS) -o $@
+
+# Common Performance Test
+bin/perf-test-common: $(OBJECTS_ROOT_DIR)/common/perf_test.o $(TARGET_LIBRARY)
+	$(CC) $(CC_FLAGS) $(OBJECTS_ROOT_DIR)/common/perf_test.o $(LINKER_FLAGS) -o $@
+
+# C Timestamping Performance Test
+bin/perf-test-c-timestamping: $(OBJECTS_ROOT_DIR)/time/c_timestamping_test.o $(TARGET_LIBRARY)
+	$(CC) $(CC_FLAGS) $(OBJECTS_ROOT_DIR)/time/c_timestamping_test.o $(LINKER_FLAGS) -o $@
 
 # Container Performance Test
 bin/perf-test-containers: $(OBJECTS_ROOT_DIR)/containers/perf_test.o $(TARGET_LIBRARY)

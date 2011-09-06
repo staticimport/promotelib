@@ -36,7 +36,7 @@ CC_flags_with_deps = $(WARNING_FLAGS) $(OPTIMIZATION_FLAGS) $(DEBUGGING_FLAGS) \
 
 # Linking Flags
 LINKER_LIBRARY_DIRS = bin/lib ../lib
-LINKER_FLAGS = $(addprefix -L,$(LINKER_LIBRARY_DIRS)) -lpromotetest -lpromote
+LINKER_FLAGS = $(addprefix -L,$(LINKER_LIBRARY_DIRS)) -lpromotetest -lpromote -lrt
 
 include Makefile.special
 

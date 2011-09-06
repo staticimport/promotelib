@@ -14,9 +14,9 @@ static inline double pro_testing_calc_nanos_per(uint64_t const total_micros,
 
 void pro_print_perf_result(char const* const name, double const nanos);
 
-void pro_print_perf_iters_result(char const *const  name,
+void pro_print_perf_iters_result(char const *const name,
                                  uint64_t const iterations,
-                                 double const total_nanos);
+                                 double const nanos);
 
 void pro_print_unit_result(const char* name,
                            const char* error);
