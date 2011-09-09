@@ -20,6 +20,7 @@ TARGET_LIBRARY = bin/lib/libpromotetest.a
 DEBUGGING_FLAGS = -g3 -ggdb
 ENVIRONMENT_FLAGS = -pthread -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 INCLUDE_PATH_FLAGS = -I../include $(foreach dir,$(sort $(dir $(CC_HEADER_FILES))),-I$(dir))
+INCLUDE_PATH_EXE_FLAGS = -Iinclude -I../include
 MISCELLANEOUS_FLAGS = -pipe -std=gnu99
 OPTIMIZATION_FLAGS = -Ofast
 WARNING_FLAGS = -Wall -Werror
@@ -28,6 +29,10 @@ WARNING_FLAGS = -Wall -Werror
 CC_FLAGS = $(WARNING_FLAGS) $(OPTIMIZATION_FLAGS) $(DEBUGGING_FLAGS) \
             $(ENVIRONMENT_FLAGS) $(MISCELLANEOUS_FLAGS) \
             $(INCLUDE_PATH_FLAGS)
+CC_EXE_FLAGS = $(WARNING_FLAGS) $(OPTIMIZATION_FLAGS) $(DEBUGGING_FLAGS) \
+               $(ENVIRONMENT_FLAGS) $(MISCELLANEOUS_FLAGS) \
+               $(INCLUDE_PATH_EXE_FLAGS)
+
 
 # Create Compilation Flags, where $1 = full path to .o file
 CC_flags_with_deps = $(WARNING_FLAGS) $(OPTIMIZATION_FLAGS) $(DEBUGGING_FLAGS) \
@@ -38,9 +43,7 @@ CC_flags_with_deps = $(WARNING_FLAGS) $(OPTIMIZATION_FLAGS) $(DEBUGGING_FLAGS) \
 LINKER_LIBRARY_DIRS = bin/lib ../lib
 LINKER_FLAGS = $(addprefix -L,$(LINKER_LIBRARY_DIRS)) -lpromotetest -lpromote -lrt
 
-include Makefile.special
-
-all: init compile $(TARGET_LIBRARY) install all-special
+all: init compile $(TARGET_LIBRARY) install bin/unit-test
 
 clean:
 	rm -rf bin/*
@@ -60,6 +63,9 @@ $(OBJECTS_ROOT_DIR)/%.o: $(GLOBAL_DEPENDENCIES) | init
 
 $(TARGET_LIBRARY): $(IMPLEMENTATION_OBJECTS)
 	ar rcs $(TARGET_LIBRARY) $(IMPLEMENTATION_OBJECTS)
+
+bin/unit-test: src/unit_test.c $(TARGET_LIBRARY) | install
+	$(CC) $(CC_EXE_FLAGS) src/unit_test.c $(LINKER_FLAGS) -o bin/unit-test
 
 %.d:
 
