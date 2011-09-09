@@ -11,9 +11,9 @@
 static bool is_contained(char const* const* const array, int len,
                          char const* const s);
 
-static void unit_test_common();
-static void unit_test_containers();
-static void unit_test_time();
+static void perf_test_common();
+static void perf_test_containers();
+static void perf_test_time();
 
 int main(int argc, char const* const* argv)
 {
@@ -24,19 +24,19 @@ int main(int argc, char const* const* argv)
   // Common
   if (run_all or is_contained(args, arg_count, "common")) {
     printf("\n[[ src/common ]]\n");
-    unit_test_common();
+    perf_test_common();
   }
 
   // Containers
   if (run_all or is_contained(args, arg_count, "containers")) {
     printf("\n[[ src/containers ]]\n");
-    unit_test_containers();
+    perf_test_containers();
   }
 
   // Time
   if (run_all or is_contained(args, arg_count, "time")) {
     printf("\n[[ src/time ]]\n");
-    unit_test_time();
+    perf_test_time();
   }
 
   return 0;
@@ -53,18 +53,18 @@ static bool is_contained(char const* const* const array, int len,
   return false;
 }
 
-static void unit_test_common()
+static void perf_test_common()
 {
-  pro_unit_test_item();
+  pro_perf_test_item();
 }
 
-static void unit_test_containers()
+static void perf_test_containers()
 {
-  pro_unit_test_vector();
+  pro_perf_test_vector();
 }
 
-static void unit_test_time()
+static void perf_test_time()
 {
-  pro_unit_test_timeval();
+  pro_perf_test_timeval();
 }
 

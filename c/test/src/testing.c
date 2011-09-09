@@ -17,9 +17,9 @@ void pro_print_perf_result(char const* const name, double const nanos)
   int const nanos_len = sprintf(nanos_buf, "%.3f", nanos);
 
   memcpy(buf, name, name_len);
-  memset(buf + name_len, '.', 60 - name_len - nanos_len);
-  memcpy(buf + 60 - nanos_len, nanos_buf, nanos_len);
-  printf("%.*s ns\n", 60, buf);
+  memset(buf + name_len, '.', 70 - name_len - nanos_len);
+  memcpy(buf + 70 - nanos_len, nanos_buf, nanos_len);
+  printf("%.*s ns\n", 70, buf);
 }
 
 void pro_print_perf_iters_result(char const *const name,
@@ -43,9 +43,9 @@ void pro_print_perf_iters_result(char const *const name,
 
     memcpy(buf, name_with_iters_buf, name_with_iters_len);;
     memset(buf + name_with_iters_len, '.', 
-           60 - name_with_iters_len - nanos_len);
-    memcpy(buf + 60 - nanos_len, nanos_buf, nanos_len);
-    printf("%.*s ns\n", 60, buf);
+           70 - name_with_iters_len - nanos_len);
+    memcpy(buf + 70 - nanos_len, nanos_buf, nanos_len);
+    printf("%.*s ns\n", 70, buf);
 }
 
 void pro_print_unit_result(const char* name,
