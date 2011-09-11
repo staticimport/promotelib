@@ -4,8 +4,8 @@
 #include "random_generator.h"
 
 bool
-pmt_randgen_init(pmt_randgen_t *const restrict randgen,
-                 pmt_rand_t (*gen)(void* arg0),
+pro_randgen_init(pro_randgen_t *const restrict randgen,
+                 pro_rand_t (*gen)(void* arg0),
                  void* arg0)
 {
     assert(randgen);
@@ -16,8 +16,8 @@ pmt_randgen_init(pmt_randgen_t *const restrict randgen,
 }
 
 bool
-pmt_randgen_init_copy(pmt_randgen_t *const restrict dest,
-                      pmt_randgen_t *const restrict source)
+pro_randgen_init_copy(pro_randgen_t *const restrict dest,
+                      pro_randgen_t *const restrict source)
 {
     assert(dest);
     assert(source);
