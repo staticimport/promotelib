@@ -1,16 +1,16 @@
-#ifndef PROMOTE_HASH_H_
-#define PROMOTE_HASH_H_
+#ifndef PROMOTE_HASH_H
+#define PROMOTE_HASH_H
 
 #include <stdint.h>
 
 #include "item.h"
 
 typedef uint32_t pro_hash_t;
-pro_hash_t const PRO_HASH_MAX = UINT32_MAX;
-pro_hash_t const PRO_HASH_MIN = 0;
+static pro_hash_t const PRO_HASH_MAX = UINT32_MAX;
+static pro_hash_t const PRO_HASH_MIN = 0;
 
 typedef struct pro_hash_functor {
-    pro_hash_t (*function)(void*,pro_item_t);
+    pro_hash_t (*function)(void*,pro_item_t const);
     void (*uninit)(void*);
     void* arg0;
 } pro_hash_functor_t;
@@ -20,7 +20,7 @@ typedef struct pro_hash_functor {
  **/
 void
 pro_hash_functor_init(pro_hash_functor_t *const restrict functor,
-                      pro_hash_t (*function)(void*,pro_item_t),
+                      pro_hash_t (*function)(void*,pro_item_t const),
                       void (*uninit)(void*),
                       void* arg0);
 

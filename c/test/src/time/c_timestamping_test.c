@@ -7,13 +7,16 @@
 #include "stopwatch.h"
 #include "testing.h"
 
+#ifndef __APPLE__
 static uint64_t perf_test_clock_gettime(clockid_t id);
+#endif
 static uint64_t perf_test_gettimeofday();
 static uint64_t perf_test_rdtsc();
 static inline uint64_t my_rdtsc();
 
 int main(void)
 {
+#ifndef __APPLE__
   pro_print_perf_result("clock_gettime(CLOCK_REALTIME)",
                         perf_test_clock_gettime(CLOCK_REALTIME));
   pro_print_perf_result("clock_gettime(CLOCK_MONOTONIC)",
@@ -26,11 +29,13 @@ int main(void)
                         perf_test_clock_gettime(CLOCK_PROCESS_CPUTIME_ID));
   pro_print_perf_result("clock_gettime(CLOCK_THREAD_CPUTIME_ID)",
                         perf_test_clock_gettime(CLOCK_THREAD_CPUTIME_ID));
+#endif
   pro_print_perf_result("gettimeofday", perf_test_gettimeofday());
   pro_print_perf_result("rdtsc", perf_test_rdtsc());
   return 0;
 }
 
+#ifndef __APPLE__
 static uint64_t perf_test_clock_gettime(clockid_t id)
 {
   struct timespec ts;
@@ -44,6 +49,7 @@ static uint64_t perf_test_clock_gettime(clockid_t id)
   pro_stopwatch_stop(&stopwatch);
   return pro_stopwatch_elapsed_nanos(&stopwatch) / iters;
 }
+#endif
 
 static uint64_t perf_test_gettimeofday()
 {

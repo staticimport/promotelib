@@ -41,7 +41,10 @@ CC_flags_with_deps = $(WARNING_FLAGS) $(OPTIMIZATION_FLAGS) $(DEBUGGING_FLAGS) \
 
 # Linking Flags
 LINKER_LIBRARY_DIRS = bin/lib ../lib
-LINKER_FLAGS = $(addprefix -L,$(LINKER_LIBRARY_DIRS)) -lpromotetest -lpromote -lrt
+LINKER_FLAGS = $(addprefix -L,$(LINKER_LIBRARY_DIRS)) -lpromotetest -lpromote
+ifeq ($(UNAME), Linux)
+OS_SPECIFIC_LINKER_FLAGS = -lrt
+endif
 
 all: init compile $(TARGET_LIBRARY) install bin/perf-test bin/unit-test
 
@@ -65,10 +68,10 @@ $(TARGET_LIBRARY): $(IMPLEMENTATION_OBJECTS)
 	ar rcs $(TARGET_LIBRARY) $(IMPLEMENTATION_OBJECTS)
 
 bin/perf-test: src/perf_test.c $(TARGET_LIBRARY) | install
-	$(CC) $(CC_EXE_FLAGS) src/perf_test.c $(LINKER_FLAGS) -o bin/perf-test
+	$(CC) $(CC_EXE_FLAGS) src/perf_test.c $(LINKER_FLAGS) $(OS_SPECIFIC_LINKER_FLAGS) -o bin/perf-test
 
 bin/unit-test: src/unit_test.c $(TARGET_LIBRARY) | install
-	$(CC) $(CC_EXE_FLAGS) src/unit_test.c $(LINKER_FLAGS) -o bin/unit-test
+	$(CC) $(CC_EXE_FLAGS) src/unit_test.c $(LINKER_FLAGS) $(OS_SPECIFIC_LINKER_FLAGS) -o bin/unit-test
 
 %.d:
 

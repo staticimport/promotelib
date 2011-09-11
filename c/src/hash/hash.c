@@ -5,7 +5,7 @@
 
 void
 pro_hash_functor_init(pro_hash_functor_t *const restrict functor,
-                      pro_hash_t (*function)(void*,pro_item_t),
+                      pro_hash_t (*function)(void*,pro_item_t const),
                       void (*uninit)(void*),
                       void* arg0)
 {
