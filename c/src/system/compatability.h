@@ -1,5 +1,5 @@
-#ifndef PROMOTE_COMPATABILITY_H_
-#define PROMOTE_COMPATABILITY_H_
+#ifndef PROMOTE_COMPATABILITY_H
+#define PROMOTE_COMPATABILITY_H
 
 // Support for likely/unlikely only in Linux
 #ifdef Linux
