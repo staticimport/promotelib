@@ -38,7 +38,7 @@ CC_flags_with_deps = $(WARNING_FLAGS) $(OPTIMIZATION_FLAGS) $(DEBUGGING_FLAGS) \
 all: init compile $(TARGET_LIBRARY) install
 
 clean:
-	rm -rf bin/*
+	rm -rf bin/* lib/* include/*
 
 compile: $(ALL_OBJECTS) | init
 

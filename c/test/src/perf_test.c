@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "hash_functions_test.h"
 #include "item_test.h"
 #include "timeval_test.h"
 #include "vector_test.h"
@@ -13,7 +14,14 @@ static bool is_contained(char const* const* const array, int len,
 
 static void perf_test_common();
 static void perf_test_containers();
+static void perf_test_hash();
 static void perf_test_time();
+
+#define CONDITIONAL_RUN_TEST_SUITE(name) \
+  if (run_all or is_contained(args, arg_count, #name)) { \
+    printf("\n[[ src/%s ]]\n", #name); \
+    perf_test_ ## name (); \
+  }
 
 int main(int argc, char const* const* argv)
 {
@@ -21,23 +29,10 @@ int main(int argc, char const* const* argv)
   int const arg_count = argc - 1;
   char const* const* const args = argv + 1;
 
-  // Common
-  if (run_all or is_contained(args, arg_count, "common")) {
-    printf("\n[[ src/common ]]\n");
-    perf_test_common();
-  }
-
-  // Containers
-  if (run_all or is_contained(args, arg_count, "containers")) {
-    printf("\n[[ src/containers ]]\n");
-    perf_test_containers();
-  }
-
-  // Time
-  if (run_all or is_contained(args, arg_count, "time")) {
-    printf("\n[[ src/time ]]\n");
-    perf_test_time();
-  }
+  CONDITIONAL_RUN_TEST_SUITE(common)
+  CONDITIONAL_RUN_TEST_SUITE(containers)
+  CONDITIONAL_RUN_TEST_SUITE(hash)
+  CONDITIONAL_RUN_TEST_SUITE(time)
 
   return 0;
 }
@@ -61,6 +56,11 @@ static void perf_test_common()
 static void perf_test_containers()
 {
   pro_perf_test_vector();
+}
+
+static void perf_test_hash()
+{
+  pro_perf_test_hash_functions();
 }
 
 static void perf_test_time()

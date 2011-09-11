@@ -22,7 +22,7 @@ ENVIRONMENT_FLAGS = -pthread -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 INCLUDE_PATH_FLAGS = -I../include $(foreach dir,$(sort $(dir $(CC_HEADER_FILES))),-I$(dir))
 INCLUDE_PATH_EXE_FLAGS = -Iinclude -I../include
 MISCELLANEOUS_FLAGS = -pipe -std=gnu99
-OPTIMIZATION_FLAGS = -Ofast
+OPTIMIZATION_FLAGS = -Ofast -funroll-loops
 WARNING_FLAGS = -Wall -Werror
 
 # Combined Compilation Flags
@@ -49,7 +49,7 @@ endif
 all: init compile $(TARGET_LIBRARY) install bin/perf-test bin/unit-test
 
 clean:
-	rm -rf bin/*
+	rm -rf bin/* lib/* include/*
 
 compile: $(ALL_OBJECTS) | init
 
