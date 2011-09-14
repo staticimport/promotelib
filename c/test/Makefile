@@ -23,6 +23,7 @@ INCLUDE_PATH_FLAGS = -I../include $(foreach dir,$(sort $(dir $(CC_HEADER_FILES))
 INCLUDE_PATH_EXE_FLAGS = -Iinclude -I../include
 MISCELLANEOUS_FLAGS = -pipe -std=gnu99
 OPTIMIZATION_FLAGS = -Ofast -funroll-loops
+#OPTIMIZATION_FLAGS = -Ofast -mtune=corei7 -march=corei7 -funroll-loops
 WARNING_FLAGS = -Wall -Werror
 
 # Combined Compilation Flags

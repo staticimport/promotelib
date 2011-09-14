@@ -73,6 +73,7 @@ static inline pro_item_t
 pro_item_bool(bool const b)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.b = b;
   return value;
 }
@@ -81,6 +82,7 @@ static inline pro_item_t
 pro_item_char(char const c)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.c = c;
   return value;
 }
@@ -89,6 +91,7 @@ static inline pro_item_t
 pro_item_double(double const d)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.d = d;
   return value;
 }
@@ -97,6 +100,7 @@ static inline pro_item_t
 pro_item_float(float const f)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.f = f;
   return value;
 }
@@ -105,6 +109,7 @@ static inline pro_item_t
 pro_item_int(int const i)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.i = i;
   return value;
 }
@@ -113,6 +118,7 @@ static inline pro_item_t
 pro_item_int8(int8_t const i8)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.i8 = i8;
   return value;
 }
@@ -121,6 +127,7 @@ static inline pro_item_t
 pro_item_int16(int16_t const i16)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.i16 = i16;
   return value;
 }
@@ -129,6 +136,7 @@ static inline pro_item_t
 pro_item_int32(int32_t const i32)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.i32 = i32;
   return value;
 }
@@ -145,6 +153,7 @@ static inline pro_item_t
 pro_item_long(long const l)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.l = l;
   return value;
 }
@@ -153,6 +162,7 @@ static inline pro_item_t
 pro_item_longlong(long long const ll)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.ll = ll;
   return value;
 }
@@ -161,6 +171,7 @@ static inline pro_item_t
 pro_item_short(short const s)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.s = s;
   return value;
 }
@@ -169,6 +180,7 @@ static inline pro_item_t
 pro_item_sizet(size_t const szt)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.szt = szt;
   return value;
 }
@@ -177,6 +189,7 @@ static inline pro_item_t
 pro_item_uint8(uint8_t const u8)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.u8 = u8;
   return value;
 }
@@ -185,6 +198,7 @@ static inline pro_item_t
 pro_item_uint16(uint16_t const u16)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.u16 = u16;
   return value;
 }
@@ -193,6 +207,7 @@ static inline pro_item_t
 pro_item_uint32(uint32_t const u32)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.u32 = u32;
   return value;
 }
@@ -209,6 +224,7 @@ static inline pro_item_t
 pro_item_uint(unsigned const u)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.u = u;
   return value;
 }
@@ -217,6 +233,7 @@ static inline pro_item_t
 pro_item_uchar(unsigned char const uc)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.uc = uc;
   return value;
 }
@@ -225,6 +242,7 @@ static inline pro_item_t
 pro_item_ushort(unsigned short const us)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.us = us;
   return value;
 }
@@ -233,6 +251,7 @@ static inline pro_item_t
 pro_item_ulong(unsigned long const ul)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.ul = ul;
   return value;
 }
@@ -241,6 +260,7 @@ static inline pro_item_t
 pro_item_ulonglong(unsigned long long const ull)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.ull = ull;
   return value;
 }
@@ -249,6 +269,7 @@ static inline pro_item_t
 pro_item_ptr(void *const ptr)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.ptr = ptr;
   return value;
 }
@@ -257,6 +278,7 @@ static inline pro_item_t
 pro_item_constptr(void const *const cptr)
 {
   pro_item_t value;
+  value.u64 = 0;
   value.cptr = cptr;
   return value;
 }

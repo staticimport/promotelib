@@ -21,7 +21,8 @@ DEBUGGING_FLAGS = -g3 -ggdb
 ENVIRONMENT_FLAGS = -pthread -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 INCLUDE_PATH_FLAGS = $(foreach dir,$(sort $(dir $(CC_HEADER_FILES))),-I$(dir))
 MISCELLANEOUS_FLAGS = -pipe -std=gnu99
-OPTIMIZATION_FLAGS = -Ofast
+#OPTIMIZATION_FLAGS = -Ofast -mtune=corei7 -march=corei7 -funroll-loops
+OPTIMIZATION_FLAGS = -Ofast -funroll-loops
 WARNING_FLAGS = -Wall -Werror
 
 # Combined Compilation Flags

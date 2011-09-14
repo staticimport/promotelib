@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "allocator_test.h"
 #include "hash_functions_test.h"
 #include "item_test.h"
 #include "timeval_test.h"
@@ -15,6 +16,7 @@ static bool is_contained(char const* const* const array, int len,
 static void perf_test_common();
 static void perf_test_containers();
 static void perf_test_hash();
+static void perf_test_memory();
 static void perf_test_time();
 
 #define CONDITIONAL_RUN_TEST_SUITE(name) \
@@ -32,6 +34,7 @@ int main(int argc, char const* const* argv)
   CONDITIONAL_RUN_TEST_SUITE(common)
   CONDITIONAL_RUN_TEST_SUITE(containers)
   CONDITIONAL_RUN_TEST_SUITE(hash)
+  CONDITIONAL_RUN_TEST_SUITE(memory)
   CONDITIONAL_RUN_TEST_SUITE(time)
 
   return 0;
@@ -61,6 +64,11 @@ static void perf_test_containers()
 static void perf_test_hash()
 {
   pro_perf_test_hash_functions();
+}
+
+static void perf_test_memory()
+{
+  pro_perf_test_allocator();
 }
 
 static void perf_test_time()
