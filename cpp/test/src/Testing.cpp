@@ -5,9 +5,8 @@
 #include <iostream>
 #include <sstream>
 
-using namespace promote::testing;
 
-void printPerfResult(std::string const& name, double const nanos)
+void promote::testing::printPerfResult(std::string const& name, double const nanos)
 {
   std::ostringstream oss;
   oss << std::setprecision(3) << nanos;
@@ -20,9 +19,9 @@ void printPerfResult(std::string const& name, double const nanos)
   std::cout << nanosStr << " ns\n";
 }
 
-void printPerfItersResult(std::string const& name,
-                          std::size_t const iters,
-                          double const nanos)
+void promote::testing::printPerfItersResult(std::string const& name,
+                                            std::size_t const iters,
+                                            double const nanos)
 {
   std::ostringstream oss1;
   oss1 << name << " x " << iters;
@@ -39,9 +38,10 @@ void printPerfItersResult(std::string const& name,
   std::cout << nanosStr << " ns\n";
 }
 
-void printUnitResult(std::string const& name, std::string const& error)
+void promote::testing::printUnitResult(std::string const& name, 
+                                       std::string const& error)
 {
-  bool const isError(error.length() == 0);
+  bool const isError(error.length() != 0);
   std::string const status(isError ? "fail" : "pass");
 
   std::cout << name;

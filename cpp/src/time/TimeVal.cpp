@@ -3,7 +3,7 @@
 #include <ctime>
 #else
 extern "C" {
-#include <CoreServices/CoreServices.h>
+//#include <CoreServices/CoreServices.h>
 #include <sys/time.h>
 }
 #endif
@@ -12,8 +12,8 @@ extern "C" {
 
 using namespace promote;
 
-int64_t const TimeVal::NANOS_PER_MICRO = 1000000;
-int64_t const TimeVal::NANOS_PER_MILLI = 1000;
+int64_t const TimeVal::NANOS_PER_MICRO = 1000;
+int64_t const TimeVal::NANOS_PER_MILLI = 1000000;
 int64_t const TimeVal::NANOS_PER_SECOND = 1000000000;
 
 TimeVal TimeVal::monotonic()
@@ -23,8 +23,9 @@ TimeVal TimeVal::monotonic()
   clock_gettime(CLOCK_MONOTONIC_RAW, &spec);
   return TimeVal(((int64_t)spec.tv_sec * NANOS_PER_SECOND) + (int64_t)spec.tv_nsec);
 #else
-  UnsignedWide const uw = AbsoluteToNanoseconds(UpTime());
-  return TimeVal((((int64_t)uw.hi)<<32)|(uw.lo));
+  return wall(); // TODO: THIS IS NOT GOOD!
+//  UnsignedWide const uw = AbsoluteToNanoseconds(UpTime());
+//  return TimeVal((((int64_t)uw.hi)<<32)|(uw.lo));
 #endif
 }
 
