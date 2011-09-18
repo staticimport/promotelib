@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_set>
 
+#include "StopWatchTest.hpp"
 #include "TimeValTest.hpp"
 
 #define CONDITIONAL_RUN_TEST_SUITE(name) \
@@ -31,6 +32,7 @@ int main(int argc, char const* const* argv)
 
 static void timeTest()
 {
+  unitTestStopWatch();
   unitTestTimeVal();
 }
 
