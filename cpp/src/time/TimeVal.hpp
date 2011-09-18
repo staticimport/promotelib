@@ -32,6 +32,7 @@ namespace promote {
     inline bool operator>=(TimeVal const& tv) const;
 
     // Non-Const
+    inline TimeVal const& operator=(TimeVal const& tv);
     inline TimeVal const& operator+=(TimeVal const& tv);
     inline TimeVal const& operator-=(TimeVal const& tv);
 
@@ -147,6 +148,13 @@ promote::TimeVal::operator>=(promote::TimeVal const& tv) const
 }
 
 // Non-Const
+inline promote::TimeVal const&
+promote::TimeVal::operator=(promote::TimeVal const& tv)
+{
+  _nanoseconds = tv.nanoseconds();
+  return *this;
+}
+
 inline promote::TimeVal const& 
 promote::TimeVal::operator+=(promote::TimeVal const& tv)
 {
