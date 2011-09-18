@@ -1,14 +1,19 @@
 
+#include <cassert>
 extern "C" {
 #include <sys/time.h>
 }
 
+#include "StopWatch.hpp"
 #include "Testing.hpp"
 #include "TimeVal.hpp"
 #include "TimeValTest.hpp"
 
 using namespace promote;
 using namespace promote::testing;
+
+static double perfTestMonotonic();
+static double perfTestWall();
 
 static std::string unitTestMonotonic();
 static std::string unitTestWall();
@@ -29,6 +34,8 @@ static std::string unitTestDecrease();
 
 void promote::testing::perfTestTimeVal()
 {
+  printPerfResult("TimeVal: monotonic()", perfTestMonotonic());
+  printPerfResult("TimeVal: wall()", perfTestWall());
 }
 
 void promote::testing::unitTestTimeVal()
@@ -59,6 +66,38 @@ void promote::testing::unitTestTimeVal()
   printUnitResult("TimeVal: >=", unitTestGreaterThanOrEq());
   printUnitResult("TimeVal: +=", unitTestIncrease());
   printUnitResult("TimeVal: -=", unitTestDecrease());
+}
+
+static double perfTestMonotonic()
+{
+  StopWatch stopwatch;
+  int64_t const iters(1000000);
+  TimeVal foo(0);
+  stopwatch.start();
+  for(int64_t ii = 0; ii != iters; ++ii) {
+    foo = TimeVal(ii);
+  }
+  stopwatch.stop();
+  if (foo.nanoseconds() == 0) { // Impossible, but prevent compiler over-optimizing
+    assert(false);
+  }
+  return stopwatch.elapsed().nanoseconds() / ((double)iters);
+}
+
+static double perfTestWall()
+{
+  StopWatch stopwatch;
+  int64_t const iters(1000000);
+  TimeVal foo(0);
+  stopwatch.start();
+  for(int64_t ii = 0; ii != iters; ++ii) {
+    foo = TimeVal(ii);
+  }
+  stopwatch.stop();
+  if (foo.nanoseconds() == 0) {
+    assert(false);
+  }
+  return stopwatch.elapsed().nanoseconds() / ((double)iters);
 }
 
 static std::string unitTestMonotonic()

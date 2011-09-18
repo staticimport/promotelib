@@ -42,7 +42,7 @@ cxx_flags_with_deps = $(WARNING_FLAGS) $(OPTIMIZATION_FLAGS) $(DEBUGGING_FLAGS) 
 LINKER_LIBRARY_DIRS = bin/lib ../lib
 LINKER_FLAGS = $(addprefix -L,$(LINKER_LIBRARY_DIRS)) -lpromotetest++ -lpromote++
 
-all: init compile $(TARGET_LIBRARY) install bin/unit-test
+all: init compile $(TARGET_LIBRARY) install bin/unit-test bin/perf-test
 
 clean:
 	rm -rf bin/* include/* lib/*
@@ -63,6 +63,9 @@ $(OBJECTS_ROOT_DIR)/%.o: $(GLOBAL_DEPENDENCIES)
 
 $(TARGET_LIBRARY): $(IMPLEMENTATION_OBJECTS)
 	ar rcs $(TARGET_LIBRARY) $(IMPLEMENTATION_OBJECTS)
+
+bin/perf-test: src/PerfTest.cpp $(TARGET_LIBRARY) | install
+	$(CXX) $(CXX_EXE_FLAGS) src/PerfTest.cpp $(LINKER_FLAGS) -o bin/perf-test
 
 bin/unit-test: src/UnitTest.cpp $(TARGET_LIBRARY) | install
 	$(CXX) $(CXX_EXE_FLAGS) src/UnitTest.cpp $(LINKER_FLAGS) -o bin/unit-test
