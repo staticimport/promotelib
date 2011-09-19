@@ -1,4 +1,5 @@
 
+#include "Exception.hpp"
 #include "StopWatch.hpp"
 
 using namespace promote;
@@ -29,7 +30,7 @@ void StopWatch::start()
   if (!running()) {
     _lastStart = TimeVal::monotonic();
   } else { 
-    // TODO: THROW EXCEPTION
+    throw Exception("StopWatch::start() repeated call not allowed.");
   }
 }
 
@@ -39,7 +40,7 @@ void StopWatch::stop()
     _elapsed += (TimeVal::monotonic() - _lastStart);
     _lastStart = 0;
   } else {
-    // TODO: THROW EXCEPTION
+    throw Exception("StopWatch::stop() repeated calls not allowed.");
   }
 }
 
