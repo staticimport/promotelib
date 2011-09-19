@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_set>
 
+#include "PaddedTest.hpp"
 #include "StopWatchTest.hpp"
 #include "TimeValTest.hpp"
 
@@ -14,6 +15,7 @@
 
 using namespace promote::testing;
 
+static void commonTest();
 static void timeTest();
 
 int main(int argc, char const* const* argv)
@@ -25,9 +27,15 @@ int main(int argc, char const* const* argv)
   }
 
   // Tests
+  CONDITIONAL_RUN_TEST_SUITE(common)
   CONDITIONAL_RUN_TEST_SUITE(time)
 
   return 0;
+}
+
+static void commonTest()
+{
+  unitTestPadded();
 }
 
 static void timeTest()
